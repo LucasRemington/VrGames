@@ -315,6 +315,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Escape Room Assets\Scripts\Buttonpresser.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\EventScript2.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\firstEvent.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\HandVanish.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\LockPoint.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AmbienceEmitter.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AudioManager.cs" />
@@ -556,7 +561,6 @@
     <Compile Include="Assets\Oculus\VR\Scripts\Util\OVRWaitCursor.cs" />
     <Compile Include="Assets\Old Game Assets\LDRScripts\AnimationDrugsCheck.cs" />
     <Compile Include="Assets\Old Game Assets\LDRScripts\ButtonCompare.cs" />
-    <Compile Include="Assets\Old Game Assets\LDRScripts\Buttonpresser.cs" />
     <Compile Include="Assets\Old Game Assets\LDRScripts\CompareChecker.cs" />
     <Compile Include="Assets\Old Game Assets\LDRScripts\DrugMaker.cs" />
     <Compile Include="Assets\Old Game Assets\LDRScripts\Drugs.cs" />
