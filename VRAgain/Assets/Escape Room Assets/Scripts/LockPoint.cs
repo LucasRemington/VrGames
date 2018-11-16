@@ -7,6 +7,7 @@ public class LockPoint : MonoBehaviour {
     public Rigidbody rb;
     public bool triggerPress;
     public bool locked;
+    public AudioSource lockIn;
 
     void Update()
     {
@@ -24,7 +25,7 @@ public class LockPoint : MonoBehaviour {
             rb.constraints = RigidbodyConstraints.None;
             rb.useGravity = true;
             locked = false;
-            //this.transform.parent = other.transform;
+            this.transform.parent = null;
         }
 
     }
@@ -35,6 +36,10 @@ public class LockPoint : MonoBehaviour {
         {
             this.transform.parent = other.transform;
             Debug.Log("locked");
+            if (lockIn.isPlaying == false)
+            {
+                lockIn.Play(0);
+            }
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
             rb.useGravity = false;
             locked = true;

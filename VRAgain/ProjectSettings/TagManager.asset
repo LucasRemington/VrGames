@@ -12,6 +12,7 @@ TagManager:
   - Blender
   - AI
   - AILocker
+  - door
   layers:
   - Default
   - TransparentFX

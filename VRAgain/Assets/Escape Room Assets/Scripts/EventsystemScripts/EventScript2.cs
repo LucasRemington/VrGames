@@ -6,10 +6,16 @@ using UnityEngine.UI;
 public class EventScript2 : MonoBehaviour {
 
     public int eventSystem = 0; //int tracking which puzzles are active
-
+   
     public firstEvent firstE; //scripts for each event
+    public secondEvent secondE;
 
     public AudioSource[] AIVoice; // Audio files for narration
+
+    public AudioSource backgroundRumble; //background rumbling
+
+    public AudioSource interCom; //Intercom SE
+    public AudioSource partyHorn; // Horn SE
 
 
 	void Start () {
@@ -25,11 +31,11 @@ public class EventScript2 : MonoBehaviour {
                 break;
 
             case 1:
-                StartCoroutine(firstE.Begin());
+                StartCoroutine(secondE.Begin());
                 break;
 
             case 2:
-                StartCoroutine(firstE.Begin());
+                //StartCoroutine(firstE.Begin());
                 break;
             
         }
