@@ -319,6 +319,8 @@
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\EventScript2.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\firstEvent.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\secondEvent.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\thirdEvent.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\GameTimer.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\HandVanish.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\LockPoint.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\playerHead.cs" />

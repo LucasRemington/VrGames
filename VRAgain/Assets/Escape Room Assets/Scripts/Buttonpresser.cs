@@ -6,14 +6,13 @@ public class Buttonpresser : MonoBehaviour {
 
     Animator anim;
     public bool leftHand; // true if on left hand
-    //public AudioSource buttonPush;
+    public AudioSource buttonPush;
 
     // Use this for initialization
     void Start () {
         anim = gameObject.GetComponent<Animator>();
     }
 	
-	// Update is called once per frame
 	void OnTriggerEnter (Collider other) {
         Debug.Log("touched");
         if (other.CompareTag("Player") && other.name == "LeftHand" && leftHand == false)
@@ -28,6 +27,6 @@ public class Buttonpresser : MonoBehaviour {
     void Pushed ()
     {
         anim.SetTrigger("Press");
-        //buttonPush.Play(0);
+        buttonPush.Play(0);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class firstEvent : MonoBehaviour {
 
+    //Fades in from black, plays initial AI speech. No input required.
+
     public EventScript2 es2;
     public Animator fadeIn;
 
@@ -19,6 +21,7 @@ public class firstEvent : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         es2.interCom.Play(0);
         yield return new WaitForSeconds(4.0f);
+        es2.currentAudio = es2.AIVoice[0];
         es2.AIVoice[0].Play(0);
         yield return new WaitUntil(() => es2.interCom.isPlaying == false);
         fadeIn.SetTrigger("fade");

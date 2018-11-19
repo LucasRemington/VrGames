@@ -9,8 +9,10 @@ public class EventScript2 : MonoBehaviour {
    
     public firstEvent firstE; //scripts for each event
     public secondEvent secondE;
+    public thirdEvent thirdE;
 
     public AudioSource[] AIVoice; // Audio files for narration
+    public AudioSource currentAudio; // currently playing audio
 
     public AudioSource backgroundRumble; //background rumbling
 
@@ -35,10 +37,19 @@ public class EventScript2 : MonoBehaviour {
                 break;
 
             case 2:
-                //StartCoroutine(firstE.Begin());
+                StartCoroutine(thirdE.Begin());
                 break;
             
         }
+    }
+
+    public void currentStop (){
+        currentAudio.Stop();
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GameOver");
     }
 
     }
