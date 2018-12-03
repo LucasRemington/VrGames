@@ -10,6 +10,8 @@ public class thirdEvent : MonoBehaviour {
     public GameTimer gameT;
     public LockPoint lockPoint;
     public AudioSource[] AIHint;
+    public AudioSource terminalHint;
+    public bool noHints;
     int hint = 0;
 
     public IEnumerator Begin()
@@ -17,16 +19,18 @@ public class thirdEvent : MonoBehaviour {
         es2.eventSystem = 3;
         Debug.Log("begin event 3");
         StartCoroutine(HintTimer());
+        StartCoroutine(TerminalTimer());
         //yield return new WaitUntil(() => lockPoint.playerTouch == true);
         //es2.currentAudio = es2.AIVoice[2];
         //Debug.Log("playvoice3");
         //es2.AIVoice[2].Play(0);
         yield return new WaitUntil(() => lockPoint.parentName == "Watch");
-        es2.currentStop();
-        //es2.currentAudio = es2.AIVoice[2];
-        //es2.AIVoice[2].Play(0);
-        //yield return new WaitUntil(() => es2.AIVoice[2].isPlaying == false);
         Debug.Log("playvoice3");
+        noHints = true;
+        es2.currentStop();
+        es2.currentAudio = es2.AIVoice[2];
+        es2.AIVoice[2].Play(0);
+        yield return new WaitUntil(() => es2.AIVoice[2].isPlaying == false);
         StartCoroutine(gameT.TimerCount());
         Debug.Log("timerstart");
         es2.switchCheck();
@@ -35,14 +39,39 @@ public class thirdEvent : MonoBehaviour {
     // AI berates player after fifteen seconds have passed and they haven't picked him up
     public IEnumerator HintTimer()
     {
+        Debug.Log("hintstarted");
         yield return new WaitForSeconds(15f);
-        hint++;
-        if (lockPoint.playerTouch == false && hint <= 3 && es2.eventSystem == 3)
+        if (hint <= 2 && es2.eventSystem == 3)
         {
-            //es2.currentStop();
-            //es2.currentAudio = AIHint[hint];
-            //AIHint[hint].Play(0);
-            StartCoroutine(HintTimer());
+            if (es2.currentAudio.isPlaying == true)
+            {
+                yield return new WaitUntil(() => es2.currentAudio.isPlaying == false);
+            }
+            if (noHints == false)
+            {
+                es2.currentAudio = AIHint[hint];
+                Debug.Log("hintgiven");
+                AIHint[hint].Play(0);
+                hint++;
+                StartCoroutine(HintTimer());
+            }
+        }
+    }
+
+    // AI talks if plugged into another terminal
+    public IEnumerator TerminalTimer()
+    {
+        Debug.Log("terminalhintstarted");
+        yield return new WaitUntil(() => lockPoint.parentName == "HeatedTerminal" || lockPoint.parentName == "CryoTerminal" || lockPoint.parentName == "BrokenTerminal" || lockPoint.parentName == "TimedTerminal" || lockPoint.parentName == "ColorsTerminal" || es2.eventSystem != 3);
+        if (es2.eventSystem == 3)
+        {
+            Debug.Log("terminalhintgiven");
+            es2.currentStop();
+            es2.currentAudio = terminalHint;
+            terminalHint.Play(0);
+        } else
+        {
+            Debug.Log("terminalhintexpired");
         }
     }
 }

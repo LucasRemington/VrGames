@@ -10,6 +10,8 @@ public class fourthEvent : MonoBehaviour {
     public colorsPuzzle colrPuz;
     public brokenPuzzle brokPuz;
 
+    public AudioSource[] randomCodes;
+
     public int currentActivePuzzle;
 
     public AudioSource[] AICallout;
@@ -44,6 +46,39 @@ public class fourthEvent : MonoBehaviour {
         {
             StartCoroutine(CalloutTimer());
         }
+    }
+
+    public void RandomizeCodes() // This is an awful way to randomize codes.
+    {
+        Debug.Log("Codes randomized");
+        int a = Random.Range(0, 3);
+        heatPuz.randomCode = randomCodes[a];
+        heatPuz.codeNumber = a + 2;
+        int b = Random.Range(0, 3);
+        while (a == b)
+        {
+            b = Random.Range(0, 3);
+        }
+        patiPuz.randomCode = randomCodes[b];
+        patiPuz.codeNumber = b + 2;
+        int c = Random.Range(0, 3);
+        while (a == c || b == c)
+        {
+            c = Random.Range(0, 3);
+        }
+        colrPuz.randomCode = randomCodes[c];
+        colrPuz.codeNumber = c + 2;
+        int d = Random.Range(0, 3);
+        while (a == d || b == d || c == d)
+        {
+            d = Random.Range(0, 3);
+        }
+        brokPuz.randomCode = randomCodes[d];
+        brokPuz.codeNumber = d + 2;
+        Debug.Log(string.Format("HeatPuz = {0}", heatPuz.codeNumber));
+        Debug.Log(string.Format("PaitPuz = {0}", patiPuz.codeNumber));
+        Debug.Log(string.Format("ColrPuz = {0}", colrPuz.codeNumber));
+        Debug.Log(string.Format("BrokPuz = {0}", brokPuz.codeNumber));
     }
 
     public void ActiveSetter (int x) // heat = 1 patience = 2 broken = 3 colors = 4

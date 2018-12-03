@@ -21,15 +21,15 @@ public class secondEvent : MonoBehaviour {
         doorActive = true;
         yield return new WaitUntil(() => doorActive == false);
         Debug.Log("playvoice2");
-        //es2.AIVoice[1].Play(0);
-        //es2.currentAudio = es2.AIVoice[1];
-        //yield return new WaitUntil(() => es2.AIVoice[1].isPlaying == false);
+        es2.AIVoice[1].Play(0);
+        es2.currentAudio = es2.AIVoice[1];
+        yield return new WaitUntil(() => es2.AIVoice[1].isPlaying == false);
         es2.switchCheck();
     }
 
     public void teleportOut()
     {
-        if (es2.eventSystem == 2)
+        if (es2.eventSystem == 2 && doorActive == true)
         {
             doorActive = false;
             cryoDoor.SetTrigger("close");

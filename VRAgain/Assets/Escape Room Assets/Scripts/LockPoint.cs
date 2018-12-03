@@ -21,6 +21,10 @@ public class LockPoint : MonoBehaviour {
     public AudioSource lockIn;
     public AudioSource lockOut;
 
+    public AudioSource fireOt;
+    public Rigidbody roomCenter;
+    public float fireForce;
+
     public string parentName;  //String that holds name of current parent
 
     public bool playerTouch; //Bool checks if player has touched it yet
@@ -52,7 +56,7 @@ public class LockPoint : MonoBehaviour {
                 lockOut.Play(0);
             }
             locked = false;
-            hintGiven = false;
+            //hintGiven = false;
             this.transform.parent = null;
         }
 
@@ -94,30 +98,30 @@ public class LockPoint : MonoBehaviour {
                     Debug.Log("colors terminal start");
                     StartCoroutine(colrPuz.Begin());
                 }
-                else if (parentName == "CryoTerminal")
+                else if (parentName == "CryoTerminal" && (heatPuz.cryoVoice == 0 || heatPuz.cryoVoice == 2))
                 {
                     heatPuz.PlayCryoVoice();
                 }
-                else if (parentName == "Watch" && hintGiven == false) // heat = 1 patience = 2 broken = 3 colors = 4
+                else if (parentName == "Watch") // heat = 1 patience = 2 broken = 3 colors = 4
                 {
                     if (fourthE.currentActivePuzzle == 1)
                     {
                         heatPuz.Hint();
-                        hintGiven = true;
+                        heatPuz.hintGiven = true;
                     } else if (fourthE.currentActivePuzzle == 2)
                     {
                         patiPuz.Hint();
-                        hintGiven = true;
+                        patiPuz.hintGiven = true;
                     }
                     else if (fourthE.currentActivePuzzle == 3)
                     {
                         brokPuz.Hint();
-                        hintGiven = true;
+                        brokPuz.hintGiven = true;
                     }
                     else if (fourthE.currentActivePuzzle == 4)
                     {
                         colrPuz.Hint();
-                        hintGiven = true;
+                        colrPuz.hintGiven = true;
                     }
                 }
             }
@@ -134,5 +138,16 @@ public class LockPoint : MonoBehaviour {
         triggerPress = true;
         yield return new WaitForSeconds(0.1f);
         triggerPress = false;
+    }
+
+    public void fireOut() //shoots AI out of terminal towards center of room.
+    {
+        Debug.Log("fire out");
+        rb.constraints = RigidbodyConstraints.None;
+        rb.useGravity = true;
+        fireOt.Play(0);
+        locked = false;
+        this.transform.parent = null;
+        rb.AddForce((roomCenter.position - transform.position) * fireForce);
     }
 }

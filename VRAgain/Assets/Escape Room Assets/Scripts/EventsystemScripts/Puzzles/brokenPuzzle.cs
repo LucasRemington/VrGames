@@ -7,6 +7,10 @@ public class brokenPuzzle : MonoBehaviour {
     public bool started;
     public bool active;
     public bool solved;
+    public bool hintGiven;
+
+    public AudioSource randomCode;
+    public int codeNumber;
 
     public fourthEvent fourthE;
     public EventScript2 es2;
