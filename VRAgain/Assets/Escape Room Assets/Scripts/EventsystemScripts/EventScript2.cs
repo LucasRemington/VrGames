@@ -10,6 +10,8 @@ public class EventScript2 : MonoBehaviour {
     public firstEvent firstE; //scripts for each event
     public secondEvent secondE;
     public thirdEvent thirdE;
+    public fourthEvent fourthE;
+    //public fifthEvent fifthE;
 
     public AudioSource[] AIVoice; // Audio files for narration
     public AudioSource currentAudio; // currently playing audio
@@ -39,7 +41,11 @@ public class EventScript2 : MonoBehaviour {
             case 2:
                 StartCoroutine(thirdE.Begin());
                 break;
-            
+
+            case 3:
+                StartCoroutine(fourthE.Begin());
+                break;
+
         }
     }
 

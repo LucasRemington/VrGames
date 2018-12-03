@@ -5,13 +5,25 @@ using UnityEngine;
 public class LockPoint : MonoBehaviour {
 
     public Rigidbody rb;
+
+    //Relevant scripts for puzzles and general evejnts
+    public EventScript2 es2;
+    public fourthEvent fourthE;
+    public heatedPuzzle heatPuz;
+    public patiencePuzzle patiPuz;
+    public colorsPuzzle colrPuz;
+    public brokenPuzzle brokPuz;
+
+    //Relevant bools and sounds for plugging into and dropping out of terminals
     public bool triggerPress;
     public bool locked;
+    public bool hintGiven;
     public AudioSource lockIn;
     public AudioSource lockOut;
-    public string parentName;
 
-    public bool playerTouch;
+    public string parentName;  //String that holds name of current parent
+
+    public bool playerTouch; //Bool checks if player has touched it yet
 
     void Update()
     {
@@ -40,6 +52,7 @@ public class LockPoint : MonoBehaviour {
                 lockOut.Play(0);
             }
             locked = false;
+            hintGiven = false;
             this.transform.parent = null;
         }
 
@@ -51,7 +64,7 @@ public class LockPoint : MonoBehaviour {
         {
             this.transform.parent = other.transform;
             Debug.Log("locked");
-            if (lockIn.isPlaying == false)
+            if (lockIn.isPlaying == false && locked == false)
             {
                 Debug.Log("play lockin");
                 lockIn.Play(0);
@@ -59,6 +72,55 @@ public class LockPoint : MonoBehaviour {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
             rb.useGravity = false;
             locked = true;
+            if (es2.eventSystem == 4)
+            {
+                if (parentName == "HeatedTerminal" && heatPuz.started == false)
+                {
+                    Debug.Log("heated terminal start");
+                    StartCoroutine(heatPuz.Begin());
+                }
+                else if (parentName == "TimedTerminal" && patiPuz.started == false)
+                {
+                    Debug.Log("timed terminal start");
+                    StartCoroutine(patiPuz.Begin());
+                }
+                else if (parentName == "BrokenTerminal" && brokPuz.started == false)
+                {
+                    Debug.Log("broken terminal start");
+                    StartCoroutine(brokPuz.Begin());
+                }
+                else if (parentName == "ColorsTerminal" && colrPuz.started == false)
+                {
+                    Debug.Log("colors terminal start");
+                    StartCoroutine(colrPuz.Begin());
+                }
+                else if (parentName == "CryoTerminal")
+                {
+                    heatPuz.PlayCryoVoice();
+                }
+                else if (parentName == "Watch" && hintGiven == false) // heat = 1 patience = 2 broken = 3 colors = 4
+                {
+                    if (fourthE.currentActivePuzzle == 1)
+                    {
+                        heatPuz.Hint();
+                        hintGiven = true;
+                    } else if (fourthE.currentActivePuzzle == 2)
+                    {
+                        patiPuz.Hint();
+                        hintGiven = true;
+                    }
+                    else if (fourthE.currentActivePuzzle == 3)
+                    {
+                        brokPuz.Hint();
+                        hintGiven = true;
+                    }
+                    else if (fourthE.currentActivePuzzle == 4)
+                    {
+                        colrPuz.Hint();
+                        hintGiven = true;
+                    }
+                }
+            }
         }
     }
 

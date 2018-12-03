@@ -315,9 +315,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Escape Room Assets\Scripts\ButtonControl.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\Buttonpresser.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\EventScript2.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\firstEvent.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\fourthEvent.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\Puzzles\brokenPuzzle.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\Puzzles\colorsPuzzle.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\Puzzles\heatedPuzzle.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\Puzzles\patiencePuzzle.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\secondEvent.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\thirdEvent.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\GameTimer.cs" />
