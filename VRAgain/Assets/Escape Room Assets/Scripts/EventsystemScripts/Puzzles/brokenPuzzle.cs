@@ -21,6 +21,30 @@ public class brokenPuzzle : MonoBehaviour {
         yield return new WaitForSeconds(20f);
     }
 
+    public void RandomizeCode()
+    {
+        int rand = Random.Range(0, 4);
+        switch (rand)
+        {
+            case 0:
+                codeNumber = 5;
+                break;
+
+            case 1:
+                codeNumber = 4;
+                break;
+
+            case 2:
+                codeNumber = 3;
+                break;
+
+            case 3:
+                codeNumber = 2;
+                break;
+        }
+        randomCode = fourthE.randomCodes[rand];
+    }
+
     public void Hint()
     {
 

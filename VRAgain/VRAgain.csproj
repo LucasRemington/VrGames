@@ -315,8 +315,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Escape Room Assets\Scripts\BucketLock.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\ButtonControl.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\Buttonpresser.cs" />
+    <Compile Include="Assets\Escape Room Assets\Scripts\CodeLock.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\EventScript2.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\firstEvent.cs" />
     <Compile Include="Assets\Escape Room Assets\Scripts\EventsystemScripts\fourthEvent.cs" />

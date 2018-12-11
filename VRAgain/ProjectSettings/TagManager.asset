@@ -13,6 +13,11 @@ TagManager:
   - AI
   - AILocker
   - door
+  - Bucket
+  - LeakyPipe
+  - Heated
+  - Freezing
+  - CodeChip
   layers:
   - Default
   - TransparentFX

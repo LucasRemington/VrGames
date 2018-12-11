@@ -7,6 +7,11 @@ public class Buttonpresser : MonoBehaviour {
     Animator anim;
     public bool leftHand; // true if on left hand
     public AudioSource buttonPush;
+    public AudioSource dormantPush;
+    public bool buttonActive;
+    public bool buttonPushed;
+    public colorsPuzzle colrPuz;
+    public int color; //1 red 2 yellow 3 green 4 blue
 
     // Use this for initialization
     void Start () {
@@ -26,7 +31,20 @@ public class Buttonpresser : MonoBehaviour {
     }
     void Pushed ()
     {
-        anim.SetTrigger("Press");
-        buttonPush.Play(0);
+        if (buttonActive == true)
+        {
+            anim.SetTrigger("Press");
+            buttonPush.Play(0);
+            buttonPushed = true;
+            if (color != 0)
+            {
+                colrPuz.ButtonCounter(color);
+            }
+        }
+        else
+        {
+            anim.SetTrigger("DormantPress");
+            dormantPush.Play(0);
+        }
     }
 }

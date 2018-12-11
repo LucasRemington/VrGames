@@ -8,13 +8,16 @@ public class heatedPuzzle : MonoBehaviour {
     public bool active;
     public bool solved;
     public bool hintGiven;
+    public bool coolTerminal;
 
     public AudioSource randomCode;
     public int codeNumber;
 
     public fourthEvent fourthE;
+    public secondEvent secondE;
     public EventScript2 es2;
     public LockPoint lockP;
+    public CodeLock cLock;
 
     public AudioSource OwFuck;
     public AudioSource StartHeat;
@@ -22,18 +25,24 @@ public class heatedPuzzle : MonoBehaviour {
     public AudioSource WateronHotHeat;
     public AudioSource[] CryoPluginHeat;
     public AudioSource WaterFreezeHeat;
+    public AudioSource WaterFreezeAlt;
     public AudioSource FreezeFinishHeat;
     public AudioSource[] SuccessHeat;
 
     public GameObject AI;
+    public GameObject codeDrive;
+    public GameObject cryoTest;
 
     public int cryoVoice = 0;
+    public bool canCryo;
 
     public IEnumerator Begin()
     {
         Debug.Log("Heated puzzle start");
         started = true;
+        cryoTest.SetActive(true);
         fourthE.ActiveSetter(1); // 1 for active setter 
+        RandomizeCode();
         es2.currentStop();
         es2.currentAudio = OwFuck;
         OwFuck.Play(0);
@@ -43,60 +52,89 @@ public class heatedPuzzle : MonoBehaviour {
         es2.currentAudio = StartHeat;
         StartHeat.Play(0);
         yield return new WaitUntil(() => StartHeat.isPlaying == false);
+        fourthE.ActiveSetter(1); // 1 for active setter 
         Debug.Log("bucket check");
-        //this is where all that wacky fun bucket stuff happens. When the bucket is full and in the chamber...
+        yield return new WaitUntil(() => coolTerminal == true);
+        fourthE.ActiveSetter(1); // 1 for active setter 
         es2.currentStop();
-        es2.currentAudio = WaterFreezeHeat;
-        WaterFreezeHeat.Play(0);
-        yield return new WaitUntil(() => WaterFreezeHeat.isPlaying == false && lockP.parentName == "CryoTerminal");
-        //play animations for door
+        es2.currentAudio = SuccessHeat[0];
+        SuccessHeat[0].Play(0);
+        createCodeDrive();
+        yield return new WaitUntil(() => cLock.hintGiven == true);
+        yield return new WaitForSeconds(1f);
         es2.currentStop();
-        es2.currentAudio = FreezeFinishHeat;
-        FreezeFinishHeat.Play(0);
-        yield return new WaitUntil(() => FreezeFinishHeat.isPlaying == false); //Plus the terminal cooldown, when I code that
-
+        es2.currentAudio = SuccessHeat[1];
+        SuccessHeat[1].Play(0);
+        yield return new WaitUntil(() => SuccessHeat[1].isPlaying == false);
+        solved = true;
+        secondE.cryoDoor.SetTrigger("close");
+        secondE.doorHiss.Play(0);
     }
 
-    public void PlayCryoVoice ()
+    public void RandomizeCode()
     {
-        if (cryoVoice == 0)
+        int rand = Random.Range(0, 4);
+        switch (rand)
         {
-            cryoVoice++;
-            StartCoroutine(CryoWaiter());
+            case 0:
+                codeNumber = 5;
+            break;
+
+            case 1:
+                codeNumber = 4;
+                break;
+
+            case 2:
+                codeNumber = 3;
+                break;
+
+            case 3:
+                codeNumber = 2;
+                break;
         }
-        else if (cryoVoice == 2)
-        {
-            cryoVoice++;
-        }
+        randomCode = fourthE.randomCodes[rand];
     }
 
-    public IEnumerator CryoWaiter()
+    public void createCodeDrive ()
     {
-        es2.currentStop();
-        if (cryoVoice == 1)
+        codeDrive.SetActive(true);
+        cLock.finalHintAudio = randomCode;
+        cLock.codeNumber = codeNumber;
+    }
+
+    public IEnumerator CryoVoice()
+    {
+        if (cryoVoice == 0 && canCryo == false)
         {
+            cryoVoice++;
+            es2.currentStop();
+            secondE.cryoDoor.SetTrigger("open");
+            secondE.doorHiss.Play(0);
             es2.currentAudio = CryoPluginHeat[0];
+            CryoPluginHeat[0].Play(0);
             yield return new WaitUntil(() => CryoPluginHeat[0].isPlaying == false);
-        } else if (cryoVoice == 3)
+            cryoVoice++;
+        } else if (cryoVoice == 2 && canCryo == false)
         {
+            cryoVoice++;
+            es2.currentStop();
             es2.currentAudio = CryoPluginHeat[1];
+            CryoPluginHeat[1].Play(0);
             yield return new WaitUntil(() => CryoPluginHeat[1].isPlaying == false);
         }
-        cryoVoice++;
     }
 
-        public void Hint()
+    public void Hint()
     {
-        if (hintGiven == false)
-        {
-            Debug.Log("hint given");
-            StartCoroutine(HintExtend());
-            hintGiven = true;
-        } else
-        {
-            Debug.Log("hint already given!");
-        }
-    }
+        if (hintGiven == false && solved == false)
+         {
+         Debug.Log("hint given");
+         StartCoroutine(HintExtend());
+         hintGiven = true;
+         } else{
+         Debug.Log("hint already given!");
+         }
+     }
 
     public IEnumerator HintExtend ()
     {
@@ -106,7 +144,7 @@ public class heatedPuzzle : MonoBehaviour {
         }
         es2.currentAudio = HintsHeat;
         HintsHeat.Play(0);
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(45f);
         hintGiven = false;
     }
 }

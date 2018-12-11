@@ -40,7 +40,7 @@ public class thirdEvent : MonoBehaviour {
     public IEnumerator HintTimer()
     {
         Debug.Log("hintstarted");
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(20f);
         if (hint <= 2 && es2.eventSystem == 3)
         {
             if (es2.currentAudio.isPlaying == true)

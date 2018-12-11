@@ -39,6 +39,9 @@ public class LockPoint : MonoBehaviour {
         if (transform.parent != null)
         {
             parentName = transform.parent.name;
+        } else
+        {
+            parentName = "null";
         }
     }
 
@@ -83,6 +86,13 @@ public class LockPoint : MonoBehaviour {
                     Debug.Log("heated terminal start");
                     StartCoroutine(heatPuz.Begin());
                 }
+                else if (parentName == "HeatedTerminal" && heatPuz.started == true && heatPuz.coolTerminal == false)
+                {
+                    fireOut();
+                    es2.currentStop();
+                    es2.currentAudio = heatPuz.OwFuck;
+                    heatPuz.OwFuck.Play(0);
+                }
                 else if (parentName == "TimedTerminal" && patiPuz.started == false)
                 {
                     Debug.Log("timed terminal start");
@@ -98,9 +108,9 @@ public class LockPoint : MonoBehaviour {
                     Debug.Log("colors terminal start");
                     StartCoroutine(colrPuz.Begin());
                 }
-                else if (parentName == "CryoTerminal" && (heatPuz.cryoVoice == 0 || heatPuz.cryoVoice == 2))
+                else if (parentName == "CryoTerminal")
                 {
-                    heatPuz.PlayCryoVoice();
+                    StartCoroutine(heatPuz.CryoVoice());
                 }
                 else if (parentName == "Watch") // heat = 1 patience = 2 broken = 3 colors = 4
                 {

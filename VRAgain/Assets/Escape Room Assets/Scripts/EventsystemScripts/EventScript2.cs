@@ -24,7 +24,6 @@ public class EventScript2 : MonoBehaviour {
 
 	void Start () {
         switchCheck(); // Calls switchcheck
-        fourthE.RandomizeCodes(); //randomizes final codes
 	}
 
     // Update is called once per frame
